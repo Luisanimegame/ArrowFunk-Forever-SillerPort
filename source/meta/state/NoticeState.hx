@@ -44,6 +44,11 @@ class NoticeState extends MusicBeatState
 		warnText.screenCenter(Y);
 		warnText.x = 20;
 		add(warnText);
+		
+		#if mobile
+        addVirtualPad(NONE, A_B);
+        #end
+		
 	}
 
 	// copied from Init

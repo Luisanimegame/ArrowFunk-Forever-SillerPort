@@ -54,6 +54,9 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
+	  #if android
+	  FlxG.android.preventDefaultKeys = [BACK];
+	  #end
 		controls.setKeyboardScheme(None, false);
 		curWacky = FlxG.random.getObject(getIntroTextShit());
 		super.create();
@@ -201,8 +204,20 @@ class TitleState extends MusicBeatState
 				pressedEnter = true;
 			#end
 		}
+		
+		#if mobile
+                var justTouched:Bool = false;
 
-		if (pressedEnter && !transitioning && skippedIntro)
+		for (touch in FlxG.touches.list)
+		{
+			if (touch.justPressed)
+			{
+				justTouched = true;
+			}
+		}
+		#end
+
+		if (pressedEnter #if mobile || justTouched #end && !transitioning && skippedIntro)
 		{
 			FlxTween.tween(FlxG.camera, {x:2000}, 3.4, {ease: FlxEase.expoInOut});
 			FlxTween.tween(gfDance, {y:2000}, 3.4, {ease: FlxEase.expoInOut});
@@ -239,7 +254,7 @@ class TitleState extends MusicBeatState
 		}
 
 		// hi game, please stop crashing its kinda annoyin, thanks!
-		if (pressedEnter && !skippedIntro && initialized)
+		if (pressedEnter #if mobile || justTouched #end && !skippedIntro && initialized)
 		{
 			skipIntro();
 		}
