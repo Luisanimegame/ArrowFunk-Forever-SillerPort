@@ -93,6 +93,7 @@ class CreditsState extends MusicBeatState
 			['Roaded64', 'roaded', 'Helped with the psych port or something', 'https://twitter.com/64_Roaded', '21ff7e'],
 			['Gabiss', 'gabiss', 'creator of Kleitin', 'https://twitter.com/G_GABlS', '83E800'],
 			['Shaggy mod', 'shaggy', 'Earthquake is inspired by Shaggy mod by SrPerez\n go play shaggy mod\ntrain go train oh', 'https://gamejolt.com/games/fnf-shaggy/643999', '2D478E'],
+			['GaboWuz', 'Gabo', 'SillerPorter', 'https://youtube.com/@gabewuzx?si=ofDsd9sEZOxyjzuY', '2D478E'],
 			[''],
 			['Special Thansk pwp'],
 			['Aizakku',				'aizakku',			'emotional support <3', 'https://twitter.com/ItsAizakku', 'EA861C'],
@@ -167,6 +168,10 @@ class CreditsState extends MusicBeatState
 		intendedColor = bg.color;
 
 		changeSelection();
+		
+		#if mobile
+        addVirtualPad(UP_DOWN, A_B);
+        #end
 	}
 
     var quitting:Bool = false;

@@ -197,6 +197,10 @@ class StoryMenuState extends MusicBeatState
 		add(txtWeekTitle);
 
 		// very unprofessional yoshubs!
+		
+		#if mobile
+        addVirtualPad(LEFT_FULL, A_B);
+        #end
 
 		changeWeek();
 		changeDifficulty();

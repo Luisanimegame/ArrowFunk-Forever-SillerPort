@@ -233,6 +233,10 @@ class MainMenuState extends MusicBeatState
 		add(versionShit);
 
 		changeItem();
+		
+		#if mobile
+        addVirtualPad(UP_DOWN, A_B);
+        #end
 
 		//
 	}
