@@ -3,6 +3,7 @@ package meta.subState;
 import flixel.FlxBasic;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import meta.Controls.Control;
 import flixel.effects.FlxFlicker;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.input.keyboard.FlxKey;
@@ -95,6 +96,10 @@ class OptionsSubstate extends MusicBeatSubState
 		submenu.visible = false;
 		submenuGroup.visible = false;
 		submenuoffsetGroup.visible = false;
+		
+		#if mobile
+		addVirtualPad(LEFT_FULL, A_B_C);
+		#end
 	}
 
 	private var keyOptions:FlxTypedGroup<Alphabet>;
@@ -279,6 +284,13 @@ class OptionsSubstate extends MusicBeatSubState
 
 			//
 			updateHorizontalSelection();
+			
+			#if mobile
+			if (virtualPad.buttonC.justPressed) {
+			  removeVirtualPad();
+			  openSubState(new mobile.MobileControlsSubState());
+			}
+			#end
 
 			if (controls.ACCEPT)
 			{

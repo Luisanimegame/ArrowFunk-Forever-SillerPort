@@ -136,6 +136,10 @@ class PauseSubState extends MusicBeatSubState
 		curSelected = 0;
 
 		changeSelection();
+		
+		#if mobile
+        addVirtualPad(UP_DOWN, A);
+        #end
 	}
 
 	override function update(elapsed:Float)
