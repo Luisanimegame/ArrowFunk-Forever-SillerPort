@@ -30,6 +30,7 @@ import gameObjects.userInterface.*;
 import gameObjects.userInterface.notes.*;
 import gameObjects.userInterface.notes.Strumline.UIStaticArrow;
 import haxe.Json;
+import meta.Controls.Control;
 import haxe.io.Bytes;
 import lime.media.AudioBuffer;
 import meta.MusicBeat.MusicBeatState;
