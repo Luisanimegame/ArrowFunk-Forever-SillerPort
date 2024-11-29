@@ -1307,19 +1307,6 @@ class PlayState extends MusicBeatState
 		//
 	}
 
-	override public function onFocus():Void
-	{
-		if (!paused)
-			updateRPC(false);
-		super.onFocus();
-	}
-
-	override public function onFocusLost():Void
-	{
-		updateRPC(true);
-		super.onFocusLost();
-	}
-
 	public static function updateRPC(pausedRPC:Bool)
 	{
 		#if !html5
