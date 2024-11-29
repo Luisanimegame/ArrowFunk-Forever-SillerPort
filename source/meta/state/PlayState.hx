@@ -1307,21 +1307,6 @@ class PlayState extends MusicBeatState
 		//
 	}
 
-	public static function updateRPC(pausedRPC:Bool)
-	{
-		#if !html5
-		var displayRPC:String = (pausedRPC) ? detailsPausedText : songDetails;
-
-		if (health > 0)
-		{
-			if (Conductor.songPosition > 0 && !pausedRPC)
-				Discord.changePresence(displayRPC, detailsSub, iconRPC, true, songLength - Conductor.songPosition);
-			else
-				Discord.changePresence(displayRPC, detailsSub, iconRPC);
-		}
-		#end
-	}
-
 	var animationsPlay:Array<Note> = [];
 
 	private var ratingTiming:String = "";
