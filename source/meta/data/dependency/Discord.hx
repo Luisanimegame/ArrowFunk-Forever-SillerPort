@@ -1,6 +1,6 @@
 package meta.data.dependency;
 
-#if !html5
+#if !mobile
 import discord_rpc.DiscordRpc;
 #end
 import lime.app.Application;
