@@ -361,12 +361,12 @@ class PlayState extends MusicBeatState
 		FlxG.camera.focusOn(camFollow.getPosition());
 
 		FlxG.worldBounds.set(0, 0, FlxG.width, FlxG.height);
-
-		// initialize ui elements
+		
 		#if mobile
 		addMobileControls();
-		#end	
+		#end
 
+		// initialize ui elements
 		startingSong = true;
 		startedCountdown = true;
 
@@ -647,6 +647,19 @@ class PlayState extends MusicBeatState
 				updateRPC(true);
 			}
 
+			// make sure you're not cheating lol
+			if (!isStoryMode)
+			{
+				// charting state (more on that later)
+				if ((FlxG.keys.justPressed.SEVEN) && (!startingSong))
+				{
+					resetMusic();
+					if (FlxG.keys.pressed.SHIFT)
+						Main.switchState(this, new ChartingState());
+					else
+						Main.switchState(this, new OriginalChartingState());
+				}
+
 				if ((FlxG.keys.justPressed.SIX)) {
 					preventScoring = true;
 					boyfriendStrums.autoplay = !boyfriendStrums.autoplay;
@@ -802,6 +815,13 @@ class PlayState extends MusicBeatState
 				if (strumline.autoplay)
 					strumCallsAuto(uiNote);
 			}
+
+			if (strumline.splashNotes != null)
+				for (i in 0...strumline.splashNotes.length)
+				{
+					strumline.splashNotes.members[i].x = strumline.receptors.members[i].x - 48;
+					strumline.splashNotes.members[i].y = strumline.receptors.members[i].y + (Note.swagWidth / 6) - 56;
+				}
 		}
 
 		// if the song is generated
@@ -1300,6 +1320,34 @@ class PlayState extends MusicBeatState
 		//
 	}
 
+	override public function onFocus():Void
+	{
+		if (!paused)
+			updateRPC(false);
+		super.onFocus();
+	}
+
+	override public function onFocusLost():Void
+	{
+		updateRPC(true);
+		super.onFocusLost();
+	}
+
+	public static function updateRPC(pausedRPC:Bool)
+	{
+		#if !html5
+		var displayRPC:String = (pausedRPC) ? detailsPausedText : songDetails;
+
+		if (health > 0)
+		{
+			if (Conductor.songPosition > 0 && !pausedRPC)
+				Discord.changePresence(displayRPC, detailsSub, iconRPC, true, songLength - Conductor.songPosition);
+			else
+				Discord.changePresence(displayRPC, detailsSub, iconRPC);
+		}
+		#end
+	}
+
 	var animationsPlay:Array<Note> = [];
 
 	private var ratingTiming:String = "";
@@ -1309,6 +1357,15 @@ class PlayState extends MusicBeatState
 		// set up the rating
 		var score:Int = 50;
 
+		// notesplashes
+		if (baseRating == "sick")
+			// create the note splash if you hit a sick
+			createSplash(coolNote, strumline);
+		else
+ 			// if it isn't a sick, and you had a sick combo, then it becomes not sick :(
+			if (allSicks)
+				allSicks = false;
+
 		displayRating(baseRating, timing);
 		Timings.updateAccuracy(Timings.judgementsMap.get(baseRating)[3]);
 		score = Std.int(Timings.judgementsMap.get(baseRating)[2]);
@@ -1317,7 +1374,15 @@ class PlayState extends MusicBeatState
 
 		popUpCombo();
 	}
-	
+
+	public function createSplash(coolNote:Note, strumline:Strumline)
+	{
+		// play animation in existing notesplashes
+		var noteSplashRandom:String = (Std.string((FlxG.random.int(0, 1) + 1)));
+		if (strumline.splashNotes != null)
+			strumline.splashNotes.members[coolNote.noteData].playAnim('anim' + noteSplashRandom, true);
+	}
+
 	private var createdColor = (Init.trueSettings.get("UI Skin") == 'default') ?
 	FlxColor.fromRGB(135, 91, 180) : FlxColor.fromRGB(204, 66, 66);
 
