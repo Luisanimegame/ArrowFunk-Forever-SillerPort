@@ -647,19 +647,6 @@ class PlayState extends MusicBeatState
 				updateRPC(true);
 			}
 
-			// make sure you're not cheating lol
-			if (!isStoryMode)
-			{
-				// charting state (more on that later)
-				if ((FlxG.keys.justPressed.SEVEN) && (!startingSong))
-				{
-					resetMusic();
-					if (FlxG.keys.pressed.SHIFT)
-						Main.switchState(this, new ChartingState());
-					else
-						Main.switchState(this, new OriginalChartingState());
-				}
-
 				if ((FlxG.keys.justPressed.SIX)) {
 					preventScoring = true;
 					boyfriendStrums.autoplay = !boyfriendStrums.autoplay;
