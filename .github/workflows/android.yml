@@ -41,7 +41,7 @@ jobs:
 
       - name: Installing Libraries
         run: |
-          haxelib setup C:/haxelib
+          haxelib setup ~/haxelib
           haxelib install lime 7.8.0
           haxelib install openfl
           haxelib install flixel 4.8.1
