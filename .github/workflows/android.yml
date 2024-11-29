@@ -41,21 +41,20 @@ jobs:
 
       - name: Installing Libraries
         run: |
-          haxelib setup ~/haxelib
-          haxelib install hxcpp 4.2.1 > /dev/null --quiet
-          haxelib install lime 7.9.0
+          haxelib setup C:/haxelib
+          haxelib install lime 7.8.0
+          haxelib install openfl
           haxelib install flixel 4.8.1
-          haxelib install openfl 9.1.0
           haxelib install flixel-ui
           haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons
           haxelib install hscript
           haxelib install newgrounds
+          haxelib run lime setup
           haxelib install flixel-tools
+          haxelib run flixel-tools setup
           haxelib git hxCodec https://github.com/polybiusproxy/hxCodec
-          haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
-          haxelib git linc_luajit https://github.com/Sirox228/linc_luajit.git
-          haxelib git extension-webm https://github.com/Sirox228/extension-webm --quiet
           haxelib git extension-androidtools https://github.com/MaysLastPlay77/extension-androidtools
+          haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
           haxelib list
 
       - name: Configure Android
