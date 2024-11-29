@@ -44,7 +44,7 @@ jobs:
           haxelib setup ~/haxelib
           haxelib install lime 7.9.0
           haxelib install openfl 9.1.0
-          haxelib install flixel 4.8.1
+          haxelib install flixel 5.2.2
           haxelib install flixel-ui
           haxelib install flixel-addons 3.0.2
           haxelib install hscript
