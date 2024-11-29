@@ -644,7 +644,6 @@ class PlayState extends MusicBeatState
 
 				// open pause substate
 				openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
-				updateRPC(true);
 				}
 			}
 
@@ -1302,34 +1301,6 @@ class PlayState extends MusicBeatState
 		//
 	}
 
-	override public function onFocus():Void
-	{
-		if (!paused)
-			updateRPC(false);
-		super.onFocus();
-	}
-
-	override public function onFocusLost():Void
-	{
-		updateRPC(true);
-		super.onFocusLost();
-	}
-
-	public static function updateRPC(pausedRPC:Bool)
-	{
-		#if !html5
-		var displayRPC:String = (pausedRPC) ? detailsPausedText : songDetails;
-
-		if (health > 0)
-		{
-			if (Conductor.songPosition > 0 && !pausedRPC)
-				Discord.changePresence(displayRPC, detailsSub, iconRPC, true, songLength - Conductor.songPosition);
-			else
-				Discord.changePresence(displayRPC, detailsSub, iconRPC);
-		}
-		#end
-	}
-
 	var animationsPlay:Array<Note> = [];
 
 	private var ratingTiming:String = "";
@@ -1563,14 +1534,6 @@ class PlayState extends MusicBeatState
 			vocals.play();
 
 			resyncVocals();
-
-			#if !html5
-			// Song duration in a float, useful for the time left feature
-			songLength = songMusic.length;
-
-			// Updating Discord Rich Presence (with Time Left)
-			updateRPC(false);
-			#end
 		}
 	}
 
@@ -1591,7 +1554,6 @@ class PlayState extends MusicBeatState
 		detailsSub = "";
 
 		// Updating Discord Rich Presence.
-		updateRPC(false);
 
 		curSong = songData.song;
 		songMusic = new FlxSound().loadEmbedded(Paths.inst(SONG.song), false, true);
@@ -2358,10 +2320,6 @@ class PlayState extends MusicBeatState
 			if ((startTimer != null) && (!startTimer.finished))
 				startTimer.active = true;
 			paused = false;
-
-			///*
-			updateRPC(false);
-			// */
 		}
 
 		super.closeSubState();
