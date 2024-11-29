@@ -803,14 +803,6 @@ class PlayState extends MusicBeatState
 					strumCallsAuto(uiNote);
 			}
 
-			if (strumline.splashNotes != null)
-				for (i in 0...strumline.splashNotes.length)
-				{
-					strumline.splashNotes.members[i].x = strumline.receptors.members[i].x - 48;
-					strumline.splashNotes.members[i].y = strumline.receptors.members[i].y + (Note.swagWidth / 6) - 56;
-				}
-		}
-
 		// if the song is generated
 		if (generatedMusic && startedCountdown)
 		{
@@ -1316,15 +1308,6 @@ class PlayState extends MusicBeatState
 		// set up the rating
 		var score:Int = 50;
 
-		// notesplashes
-		if (baseRating == "sick")
-			// create the note splash if you hit a sick
-			createSplash(coolNote, strumline);
-		else
- 			// if it isn't a sick, and you had a sick combo, then it becomes not sick :(
-			if (allSicks)
-				allSicks = false;
-
 		displayRating(baseRating, timing);
 		Timings.updateAccuracy(Timings.judgementsMap.get(baseRating)[3]);
 		score = Std.int(Timings.judgementsMap.get(baseRating)[2]);
@@ -1333,15 +1316,7 @@ class PlayState extends MusicBeatState
 
 		popUpCombo();
 	}
-
-	public function createSplash(coolNote:Note, strumline:Strumline)
-	{
-		// play animation in existing notesplashes
-		var noteSplashRandom:String = (Std.string((FlxG.random.int(0, 1) + 1)));
-		if (strumline.splashNotes != null)
-			strumline.splashNotes.members[coolNote.noteData].playAnim('anim' + noteSplashRandom, true);
-	}
-
+	
 	private var createdColor = (Init.trueSettings.get("UI Skin") == 'default') ?
 	FlxColor.fromRGB(135, 91, 180) : FlxColor.fromRGB(204, 66, 66);
 
