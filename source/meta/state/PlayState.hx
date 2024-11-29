@@ -802,6 +802,7 @@ class PlayState extends MusicBeatState
 				if (strumline.autoplay)
 					strumCallsAuto(uiNote);
 			}
+		}
 
 		// if the song is generated
 		if (generatedMusic && startedCountdown)
